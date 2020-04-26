@@ -12,8 +12,14 @@ import Portfolio from './components/Pages/Portfolio'
 import Team from './components/Common/Team'
 import Login from './components/Pages/Login'
 
-import Dashboard from './components/Pages/Dashboard'
+// Admin pages
+import Dashboard from './components/Pages/Admin/Dashboard'
+import Users from './components/Pages/Admin/Users'
+import Posts from './components/Pages/Admin/Posts'
+import AddPost from './components/Pages/Admin/AddPost'
+
 import AdminWrapper from './components/AdminWrapper'
+import LoginWrapper from './components/LoginWrapper'
 
 class App extends Component {
   render() {
@@ -21,11 +27,97 @@ class App extends Component {
       <div>
         <Router>
           <Route
+            path="/admin/users"
+            render={(props) => {
+              return (
+                <div>
+                  {this.props.auth.token ? (
+                    <AdminWrapper>
+                      <Users />
+                    </AdminWrapper>
+                  ) : (
+                      <LoginWrapper>
+                        <Login />
+                      </LoginWrapper>
+                    )}
+                </div>
+              );
+            }}
+          />
+
+          <Route
+            path="/admin/posts/:view/:id"
+            exact={true}
+            render={(props) => {
+              return (
+                <div>
+                  {this.props.auth.token ? (
+                    <AdminWrapper>
+                      <AddPost />
+                    </AdminWrapper>
+                  ) : (
+                      <LoginWrapper>
+                        <Login />
+                      </LoginWrapper>
+                    )}
+                </div>
+              );
+            }}
+          />
+
+          <Route
+            path="/admin/posts/:view"
+            exact={true}
+            render={(props) => {
+              return (
+                <div>
+                  {this.props.auth.token ? (
+                    <AdminWrapper>
+                      <AddPost />
+                    </AdminWrapper>
+                  ) : (
+                      <LoginWrapper>
+                        <Login />
+                      </LoginWrapper>
+                    )}
+                </div>
+              );
+            }}
+          />
+          <Route
+            path="/admin/posts"
+            exact={true}
+            render={(props) => {
+              return (
+                <div>
+                  {this.props.auth.token ? (
+                    <AdminWrapper>
+                      <Posts />
+                    </AdminWrapper>
+                  ) : (
+                      <LoginWrapper>
+                        <Login />
+                      </LoginWrapper>
+                    )}
+                </div>
+              );
+            }}
+          />
+          <Route
             path='/admin'
+            exact={true}
             render={(props) => (
-              <AdminWrapper>
-                {this.props.auth.token ? <Dashboard /> : <Login />}
-              </AdminWrapper>
+              <div>
+                {this.props.auth.token ? (
+                  <AdminWrapper>
+                    <Dashboard />
+                  </AdminWrapper>
+                ) : (
+                    <LoginWrapper>
+                      <Login />
+                    </LoginWrapper>
+                  )}
+              </div>
             )}
           />
 
